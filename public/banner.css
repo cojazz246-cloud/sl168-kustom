@@ -1,0 +1,57 @@
+/* Sumber aturan ukuran: ubah HANYA breakpoint CSS ini. */
+#ulb-root { display:none; }
+@media (max-width:999.98px) {
+  /* Mode 1: Overlay (Menimpa layar penuh & Kunci Scroll Penuh - Tidak Bisa Di-scroll) */
+  #ulb-root[data-ready="true"][data-mode="overlay"], #ulb-root[data-ready="true"]:not([data-mode]) {
+    display:flex; position:fixed; inset:0; z-index:2147483000; background:#fff; align-items:center; justify-content:center; overflow:hidden; cursor:pointer;
+    box-sizing:border-box; padding:16px 16px calc(145px + env(safe-area-inset-bottom));
+  }
+  body:has(#ulb-root[data-ready="true"][data-mode="overlay"]), body:has(#ulb-root[data-ready="true"]:not([data-mode])) {
+    overflow:hidden !important; position:fixed; width:100%; height:100%;
+  }
+
+  /* Mode 2: Scrollable */
+  #ulb-root[data-ready="true"][data-mode="scrollable"] {
+    display:flex; position:relative; width:100%; min-height:100dvh; background:#fff; align-items:center; justify-content:center; cursor:pointer; z-index:99;
+    box-sizing:border-box; padding:env(safe-area-inset-top) env(safe-area-inset-right) calc(145px + env(safe-area-inset-bottom)) env(safe-area-inset-left);
+  }
+}
+#ulb-root img { display:block; width:100%; height:100%; object-fit:contain; }
+#ulb-root:focus-visible { outline:4px solid #1473e6; outline-offset:-4px; }
+
+/* Tombol Thumb Reach */
+.ulb-btn-wrap {
+  position:absolute; bottom:calc(20px + env(safe-area-inset-bottom)); left:50%; transform:translateX(-50%);
+  width:min(calc(100% - 24px), 380px); z-index:10; pointer-events:auto;
+}
+
+/* Base Styling Tombol Kuning Keemasan Bergradasi (Kiri ke Kanan) */
+.ulb-btn {
+  display:flex; align-items:center; justify-content:center; gap:8px; width:100%; min-height:50px; padding:13px 20px;
+  border:1px solid rgba(255, 255, 255, 0.7); border-radius:14px;
+  background:linear-gradient(90deg, #FFE853 0%, #FFBE1A 45%, #E68B00 80%, #C46C00 100%);
+  color:#2b1400; font-size:16px; font-weight:900; letter-spacing:0.02em; text-transform:none;
+  box-shadow:0 6px 18px rgba(196,108,0,0.42), 0 2px 5px rgba(0,0,0,0.1), inset 0 1px 1px rgba(255,255,255,0.8);
+  cursor:pointer; font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color:transparent; transition:transform .15s ease, box-shadow .15s ease;
+  position:relative; overflow:hidden;
+}
+
+/* Animasi Kilauan Cahaya (Sparkle Sweep Beam) */
+.ulb-btn::after {
+  content:''; position:absolute; top:-50%; left:-70%; width:60%; height:200%;
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0) 100%);
+  transform:rotate(25deg);
+  animation:ulb-sparkle 2.2s infinite ease-in-out;
+  pointer-events:none;
+}
+
+@keyframes ulb-sparkle {
+  0% { left:-70%; opacity:0; }
+  15% { opacity:1; }
+  45%, 100% { left:150%; opacity:0; }
+}
+
+.ulb-btn:active { transform:scale(.96); box-shadow:0 3px 10px rgba(196,108,0,.5); }
+.ulb-btn svg { width:18px; height:18px; transition:transform .2s ease; flex-shrink:0; stroke:#2b1400; color:#2b1400; }
+.ulb-btn:hover svg { transform:translateX(3px); }
